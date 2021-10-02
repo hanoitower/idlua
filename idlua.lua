@@ -8,27 +8,27 @@
 idl = {}
 
 
-function idl.def(tt)
-   tt.kind = 'def'
-   return tt
+function idl.def(node)
+   node.kind = 'def'
+   return node
 end
 
 
-function idl.struct(tt)
-   tt.kind = 'struct'
-   return tt
+function idl.struct(node)
+   node.kind = 'struct'
+   return node
 end
 
 
-function idl.member(tt)
-   tt.kind = 'member'
-   return tt
+function idl.member(node)
+   node.kind = 'member'
+   return node
 end
 
 
-function idl.array(tt)
-   tt.kind = 'array'
-   return tt
+function idl.array(node)
+   node.kind = 'array'
+   return node
 end
 
 
@@ -69,37 +69,37 @@ mytypes.Point = idl.def {
 }
 
 
-function print_type(tt, indent)
+function print_type(node, indent)
    indent = indent or ''
-   kind = tt.kind
+   kind = node.kind
    if kind == 'def' then
-      print(indent .. '<def name="' .. tt.name .. '">')
-      print_type(tt[1], indent .. '  ')
+      print(indent .. '<def name="' .. node.name .. '">')
+      print_type(node[1], indent .. '  ')
       print(indent .. '</def>')
    elseif kind == 'struct' then
       print(indent .. '<struct>')
-      for _, member in ipairs(tt) do
+      for _, member in ipairs(node) do
          print_type(member, indent .. '  ')
       end
       print(indent .. '</struct>')
    elseif kind == 'member' then
-      print(indent .. '<member name="' .. tt.name .. '">')
-      print_type(tt.datatype, indent .. '  ')
+      print(indent .. '<member name="' .. node.name .. '">')
+      print_type(node.datatype, indent .. '  ')
       print(indent .. '</member>')
    elseif kind == 'array' then
-      print(indent .. '<array length="' .. tt.length .. '">')
-      print_type(tt.datatype, indent .. '  ')
+      print(indent .. '<array length="' .. node.length .. '">')
+      print_type(node.datatype, indent .. '  ')
       print(indent .. '</array>')
    elseif kind == 'basetype' then
-      print(indent .. '<basetype name="' .. tt.name .. '"/>')      
+      print(indent .. '<basetype name="' .. node.name .. '"/>')      
    end
 end
 
 
-function print_type_list(typelist)
+function print_type_list(node)
    print('<datatypes>')
    indent = '  '
-   for _, typedef in pairs(typelist) do
+   for _, typedef in pairs(node) do
       print_type(typedef, indent)
    end
    print('</datatypes>')      
