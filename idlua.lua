@@ -46,70 +46,32 @@ function idl.basetype(name)
 end
 
 
-mytypes = {}
-
-mytypes.uint8 = idl.basetype 'uint8'
-mytypes.uint16 = idl.basetype 'uint16'
-
-
-mytypes.Point = idl.def {
-   name = 'Point',
-   idl.struct {
-      idl.member {
-         name = 'x',
-         datatype = idl.struct {
-            idl.member {
-               name = 'value',
-               datatype = mytypes.uint16
-            }
-         }
-      },
-      idl.member {
-         name = 'y',
-         datatype = idl.array {
-            length = 42,
-            datatype = idl.basetype 'uint8'
-         }
-      }
-   }
-}
-
-
-package = idl.package {
-   name = 'example',
-   mytypes.uint8,
-   mytypes.uint16,
-   mytypes.Point,
-}
-
-
-
-function print_type(node, indent)
+function idl.print_type(node, indent)
    indent = indent or ''
    kind = node.kind
    if kind == 'def' then
       print(indent .. '<def name="' .. node.name .. '">')
-      print_type(node[1], indent .. '  ')
+      idl.print_type(node[1], indent .. '  ')
       print(indent .. '</def>')
    elseif kind == 'package' then
       print(indent .. '<package name="' .. node.name .. '">')
       for _, element in ipairs(node) do
-         print_type(element, indent .. '  ')
+         idl.print_type(element, indent .. '  ')
       end
       print(indent .. '</package>')
    elseif kind == 'struct' then
       print(indent .. '<struct>')
       for _, element in ipairs(node) do
-         print_type(element, indent .. '  ')
+         idl.print_type(element, indent .. '  ')
       end
       print(indent .. '</struct>')
    elseif kind == 'member' then
       print(indent .. '<member name="' .. node.name .. '">')
-      print_type(node.datatype, indent .. '  ')
+      idl.print_type(node.datatype, indent .. '  ')
       print(indent .. '</member>')
    elseif kind == 'array' then
       print(indent .. '<array length="' .. node.length .. '">')
-      print_type(node.datatype, indent .. '  ')
+      idl.print_type(node.datatype, indent .. '  ')
       print(indent .. '</array>')
    elseif kind == 'basetype' then
       print(indent .. '<basetype name="' .. node.name .. '"/>')      
@@ -117,4 +79,4 @@ function print_type(node, indent)
 end
 
 
-print_type(package)
+return idl
