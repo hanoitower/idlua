@@ -8,6 +8,12 @@
 idl = {}
 
 
+function idl.def(tt)
+   tt.kind = 'def'
+   return tt
+end
+
+
 function idl.struct(tt)
    tt.kind = 'struct'
    return tt
@@ -40,22 +46,24 @@ mytypes.uint8 = idl.basetype 'uint8'
 mytypes.uint16 = idl.basetype 'uint16'
 
 
-mytypes.Point = idl.struct {
+mytypes.Point = idl.def {
    name = 'Point',
-   idl.member {
-      name = 'x',
-      datatype = idl.struct {
-         idl.member {
-            name = 'value',
-            datatype = mytypes.uint16
+   idl.struct {
+      idl.member {
+         name = 'x',
+         datatype = idl.struct {
+            idl.member {
+               name = 'value',
+               datatype = mytypes.uint16
+            }
          }
-      }
-   },
-   idl.member {
-      name = 'y',
-      datatype = idl.array {
-         length = 42,
-         datatype = idl.basetype 'uint8'
+      },
+      idl.member {
+         name = 'y',
+         datatype = idl.array {
+            length = 42,
+            datatype = idl.basetype 'uint8'
+         }
       }
    }
 }
@@ -64,19 +72,19 @@ mytypes.Point = idl.struct {
 function print_type(tt, indent)
    indent = indent or ''
    kind = tt.kind
-   if kind == 'struct' then
-      if tt.name then
-         print(indent .. '<struct name="' .. tt.name .. '">')
-      else
-         print(indent .. '<struct>')
-      end
+   if kind == 'def' then
+      print(indent .. '<def name="' .. tt.name .. '">')
+      print_type(tt[1], indent .. '  ')
+      print(indent .. '</def>')
+   elseif kind == 'struct' then
+      print(indent .. '<struct>')
       for _, member in ipairs(tt) do
          print_type(member, indent .. '  ')
       end
       print(indent .. '</struct>')
    elseif kind == 'member' then
       print(indent .. '<member name="' .. tt.name .. '">')
-      print_type(tt.datatype, indent .. '  ')      
+      print_type(tt.datatype, indent .. '  ')
       print(indent .. '</member>')
    elseif kind == 'array' then
       print(indent .. '<array length="' .. tt.length .. '">')
