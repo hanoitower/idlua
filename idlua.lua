@@ -14,6 +14,12 @@ function idl.def(node)
 end
 
 
+function idl.package(node)
+   node.kind = 'package'
+   return node
+end
+
+
 function idl.struct(node)
    node.kind = 'struct'
    return node
@@ -69,6 +75,15 @@ mytypes.Point = idl.def {
 }
 
 
+package = idl.package {
+   name = 'example',
+   mytypes.uint8,
+   mytypes.uint16,
+   mytypes.Point,
+}
+
+
+
 function print_type(node, indent)
    indent = indent or ''
    kind = node.kind
@@ -76,10 +91,16 @@ function print_type(node, indent)
       print(indent .. '<def name="' .. node.name .. '">')
       print_type(node[1], indent .. '  ')
       print(indent .. '</def>')
+   elseif kind == 'package' then
+      print(indent .. '<package name="' .. node.name .. '">')
+      for _, element in ipairs(node) do
+         print_type(element, indent .. '  ')
+      end
+      print(indent .. '</package>')
    elseif kind == 'struct' then
       print(indent .. '<struct>')
-      for _, member in ipairs(node) do
-         print_type(member, indent .. '  ')
+      for _, element in ipairs(node) do
+         print_type(element, indent .. '  ')
       end
       print(indent .. '</struct>')
    elseif kind == 'member' then
@@ -96,14 +117,4 @@ function print_type(node, indent)
 end
 
 
-function print_type_list(node)
-   print('<datatypes>')
-   indent = '  '
-   for _, typedef in pairs(node) do
-      print_type(typedef, indent)
-   end
-   print('</datatypes>')      
-end
-
-
-print_type_list(mytypes)
+print_type(package)
