@@ -13,9 +13,15 @@ mytypes.uint16 = idl.basetype 'uint16'
 
 mytypes.Point = idl.def {
    name = 'Point',
+   desc = {
+      [[A point in 2 dimesional space.]],
+   },
    idl.struct {
       idl.member {
          name = 'x',
+         desc = {
+            [[The x coordinate of the Point.]],
+         },
          datatype = idl.struct {
             idl.member {
                name = 'value',
@@ -36,6 +42,9 @@ mytypes.Point = idl.def {
 
 mytypes.package = idl.package {
    name = 'example',
+   desc = {
+      [[A data type package example.]],
+   },
    mytypes.uint8,
    mytypes.uint16,
    mytypes.Point,
