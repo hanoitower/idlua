@@ -42,24 +42,20 @@ mytypes.uint16 = idl.basetype 'uint16'
 
 mytypes.Point = idl.struct {
    name = 'Point',
-   members = {
-      idl.member {
-         name = 'x',
-         datatype = idl.struct {
-            members = {
-               idl.member {
-                  name = 'value',
-                  datatype = mytypes.uint16
-               }
-            }
+   idl.member {
+      name = 'x',
+      datatype = idl.struct {
+         idl.member {
+            name = 'value',
+            datatype = mytypes.uint16
          }
-      },
-      idl.member {
-         name = 'y',
-         datatype = idl.array {
-            length = 42,
-            datatype = idl.basetype 'uint8'
-         }
+      }
+   },
+   idl.member {
+      name = 'y',
+      datatype = idl.array {
+         length = 42,
+         datatype = idl.basetype 'uint8'
       }
    }
 }
@@ -74,7 +70,7 @@ function print_type(tt, indent)
       else
          print(indent .. '<struct>')
       end
-      for _, member in ipairs(tt.members) do
+      for _, member in ipairs(tt) do
          print_type(member, indent .. '  ')
       end
       print(indent .. '</struct>')
