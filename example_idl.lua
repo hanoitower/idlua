@@ -7,8 +7,8 @@ local idl = require 'idlua'
 
 local mytypes = {}
 
-mytypes.uint8 = idl.basetype 'uint8'
-mytypes.uint16 = idl.basetype 'uint16'
+mytypes.uint8 = idl.platformtype 'uint8'
+mytypes.uint16 = idl.platformtype 'uint16'
 
 
 mytypes.Point = idl.def {
@@ -33,7 +33,7 @@ mytypes.Point = idl.def {
          name = 'y',
          datatype = idl.array {
             length = 42,
-            datatype = idl.basetype 'uint8'
+            datatype = idl.platformtype 'uint8'
          }
       }
    }

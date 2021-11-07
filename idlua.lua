@@ -66,9 +66,9 @@ end
 
 ---@param name string
 ---@return IdlNode
-function idl.basetype(name)
+function idl.platformtype(name)
    return {
-      kind = 'basetype',
+      kind = 'platformtype',
       name = name
    }
 end
@@ -106,8 +106,8 @@ function idl.print_type(node, indent)
       print(indent .. '<array length="' .. node.length .. '">')
       idl.print_type(node.datatype, indent .. '  ')
       print(indent .. '</array>')
-   elseif kind == 'basetype' then
-      print(indent .. '<basetype name="' .. node.name .. '"/>')      
+   elseif kind == 'platformtype' then
+      print(indent .. '<platformtype name="' .. node.name .. '"/>')      
    end
 end
 
