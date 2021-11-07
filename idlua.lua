@@ -107,7 +107,7 @@ function idl.print_type(node, indent)
       idl.print_type(node.datatype, indent .. '  ')
       print(indent .. '</array>')
    elseif kind == 'platformtype' then
-      print(indent .. '<platformtype name="' .. node.name .. '"/>')      
+      print(indent .. '<platformtype name="' .. node.name .. '"/>')
    end
 end
 
