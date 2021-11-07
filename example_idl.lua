@@ -17,23 +17,27 @@ mytypes.Point = idl.def {
       [[A point in 2 dimesional space.]],
    },
    idl.struct {
-      idl.member {
-         name = 'x',
-         desc = {
-            [[The x coordinate of the Point.]],
-         },
-         datatype = idl.struct {
-            idl.member {
-               name = 'value',
-               datatype = mytypes.uint16
+      members = {
+         idl.member {
+            name = 'x',
+            desc = {
+               [[The x coordinate of the Point.]],
+            },
+            datatype = idl.struct {
+               members = {
+                  idl.member {
+                     name = 'value',
+                     datatype = mytypes.uint16
+                  }
+               }
             }
-         }
-      },
-      idl.member {
-         name = 'y',
-         datatype = idl.array {
-            length = 42,
-            datatype = idl.platformtype 'uint8'
+         },
+         idl.member {
+            name = 'y',
+            datatype = idl.array {
+               length = 42,
+               datatype = idl.platformtype 'uint8'
+            }
          }
       }
    }

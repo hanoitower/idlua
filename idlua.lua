@@ -94,7 +94,7 @@ function idl.print_type(node, indent)
       print(indent .. '</package>')
    elseif kind == 'struct' then
       print(indent .. '<struct>')
-      for _, element in ipairs(node) do
+      for _, element in ipairs(node.members) do
          idl.print_type(element, indent .. '  ')
       end
       print(indent .. '</struct>')
