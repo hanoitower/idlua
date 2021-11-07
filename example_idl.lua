@@ -2,10 +2,10 @@
 -- example_idl.lua
 --
 
-idl = require 'idlua'
+local idl = require 'idlua'
 
 
-mytypes = {}
+local mytypes = {}
 
 mytypes.uint8 = idl.basetype 'uint8'
 mytypes.uint16 = idl.basetype 'uint16'
