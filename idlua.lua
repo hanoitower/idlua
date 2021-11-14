@@ -5,6 +5,7 @@
 --
 
 
+---@class IdlLua
 local idl = {}
 
 
@@ -74,10 +75,8 @@ function idl.platformtype(name)
 end
 
 
----@class IdlAnyNode : IdlNode, IdlArrayNode, IdlStructNode, IdlStructMemberNode
 
-
----@param node IdlAnyNode
+---@param node IdlNode
 ---@param indent string
 function idl.print_type(node, indent)
    indent = indent or ''

@@ -2,6 +2,7 @@
 -- example_idl.lua
 --
 
+---@type IdlLua
 local idl = require 'idlua'
 
 
